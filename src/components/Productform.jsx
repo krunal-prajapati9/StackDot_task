@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../Productslice";
-
+import ProductList from "./ProductList";
+import { ToastContainer, toast } from "react-toastify";
 const Productform = () => {
   const [Name, Setname] = useState("");
   const [Price, Setprice] = useState("");
@@ -20,7 +21,17 @@ const Productform = () => {
 
     dispatch(addProduct({ name: Name, price: Price, category: Category }));
 
-    alert("Product is submitted successfully");
+    toast.success("Product Added Sucessfully . !!!  Please Scroll Down", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      
+    });
 
     Setname("");
     Setprice("");
@@ -108,6 +119,20 @@ const Productform = () => {
           </form>
         </div>
       </div>
+      <ProductList />
+      <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick={false}
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+
+/>
     </>
   );
 };
