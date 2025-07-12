@@ -1,19 +1,31 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../Productslice";
 
 const Productform = () => {
   const [Name, Setname] = useState("");
   const [Price, Setprice] = useState("");
   const [Category, Setcategory] = useState("");
-  const [error, Seterror] = useState('')
-   
+  const [error, Seterror] = useState("");
+
+  const dispatch = useDispatch();
+
   const handelsubmit = (e) => {
     e.preventDefault();
 
-    alert("Producct is submitted succesfully")
+    if (!Name || !Price || !Category) {
+      Seterror("All fields are required");
+      return;
+    }
 
-    Setname('')
-    Setprice('')
-    Setcategory('')
+    dispatch(addProduct({ name: Name, price: Price, category: Category }));
+
+    alert("Product is submitted successfully");
+
+    Setname("");
+    Setprice("");
+    Setcategory("");
+    Seterror("");
   };
 
   return (
@@ -21,7 +33,7 @@ const Productform = () => {
       <div className="h-screen flex items-center justify-center bg-gradient-to-br from-black to-gray-800 w-full">
         <div className="bg-white rounded-2xl shadow-xl w-[400px] p-9">
           <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-             Add Products 
+            Add Products
           </h2>
           <form
             onSubmit={(e) => {
@@ -31,7 +43,7 @@ const Productform = () => {
           >
             <div className="flex flex-col">
               <label htmlFor="name" className="mb-1 text-gray-700 font-medium">
-                 Product Name :
+                Product Name :
               </label>
               <input
                 required
@@ -40,10 +52,10 @@ const Productform = () => {
                 type="text"
                 placeholder="Enter Product name "
                 value={Name}
-                onChange={(e)=>{
-                  Setname(e.target.value)
+                onChange={(e) => {
+                  Setname(e.target.value);
                 }}
-                 />
+              />
             </div>
 
             <div className="flex flex-col">
@@ -57,10 +69,9 @@ const Productform = () => {
                 type="text"
                 placeholder="Please Enter the price of the product"
                 value={Price}
-                onChange={(e)=>{
-                  Setprice(e.target.value)
+                onChange={(e) => {
+                  Setprice(e.target.value);
                 }}
-                
               />
             </div>
 
@@ -78,18 +89,15 @@ const Productform = () => {
                 type="text"
                 placeholder="Please Enter category "
                 value={Category}
-                onChange={(e)=>{
-                  Setcategory(e.target.value)
+                onChange={(e) => {
+                  Setcategory(e.target.value);
                 }}
-               
               />
             </div>
-
 
             {error && (
               <p className="text-red-700 text-center text-sm"> {error} </p>
             )}
-
 
             <button
               type="submit"
@@ -99,9 +107,6 @@ const Productform = () => {
             </button>
           </form>
         </div>
-
-       
-    
       </div>
     </>
   );
